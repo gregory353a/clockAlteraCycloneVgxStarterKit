@@ -14,46 +14,46 @@ module clock(
 		sec = 0; 
 	end
 	
-	always @(set)
-		begin : SETUP
-			case (sethms)
-				2'b00: begin 
-					if(upDown == 2'b10) begin
-						if(hour >= 23)
-							hour <= 5'b00000;
-						else
-							hour <= hour + 1;
-					end		
-					else if(upDown == 2'b01) begin
-						if(hour == 0)
-							hour <= 5'b10111;
-						else
-						hour <= hour - 1;
-					end
-				end 
-				2'b01: begin 
-					if(upDown == 2'b10) begin 
-						if(min >= 59)
-							min <= 6'b000000;
-						else
-							min <= min + 1;
-					end		
-					else if(upDown == 2'b01) begin
-						if(min == 0)
-							min <= 6'b111011;
-						else
-						min <= min - 1;
-					end	
-				end  
-				2'b10: begin 
-					if(upDown == 2'b10) 
-						sec <= 6'b000000;
-					else if(upDown == 2'b01)
-						sec <= 6'b000000;
-				end
-				default: begin end
-			endcase
-		end
+	// always @(set)
+		// begin : SETUP
+			// case (sethms)
+				// 2'b00: begin 
+					// if(upDown == 2'b10) begin
+						// if(hour >= 23)
+							// hour <= 5'b00000;
+						// else
+							// hour <= hour + 1;
+					// end		
+					// else if(upDown == 2'b01) begin
+						// if(hour == 0)
+							// hour <= 5'b10111;
+						// else
+						// hour <= hour - 1;
+					// end
+				// end 
+				// 2'b01: begin 
+					// if(upDown == 2'b10) begin 
+						// if(min >= 59)
+							// min <= 6'b000000;
+						// else
+							// min <= min + 1;
+					// end		
+					// else if(upDown == 2'b01) begin
+						// if(min == 0)
+							// min <= 6'b111011;
+						// else
+						// min <= min - 1;
+					// end	
+				// end  
+				// 2'b10: begin 
+					// if(upDown == 2'b10) 
+						// sec <= 6'b000000;
+					// else if(upDown == 2'b01)
+						// sec <= 6'b000000;
+				// end
+				// default: begin end
+			// endcase
+		// end
 	
 	always @(posedge oneSecClk)
 		begin : CLOCK
