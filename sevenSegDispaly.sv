@@ -1,8 +1,8 @@
 module sevenSegDisplay(
 	input wire enable,
-	input wire endot,
+//	input wire endot,
 	input wire [3:0] number,
-	output reg dot,
+//	output reg dot,
 	output reg [6:0] pattern
 );
 
@@ -29,14 +29,14 @@ module sevenSegDisplay(
 				default:
 					pattern = 7'b1111111;
 				endcase
-				if (endot)
-					dot = 0;
-				else
-					dot = 1;
+//				if (endot)
+//					dot = 0;
+//				else
+//					dot = 1;
 			end
 			else begin
 				pattern = 7'b1111111;
-				dot = 1;
+//				dot = 1;
 			end
 		end
 endmodule
