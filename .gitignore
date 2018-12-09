@@ -1,5 +1,8 @@
+db
 work
+
 modelsim.ini
+
 *.wlf
 *.opt
 *.bak
