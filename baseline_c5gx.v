@@ -174,6 +174,8 @@ module baseline_c5gx(
 		wire enableDisplay; //in
 		wire set; //in
 		wire minOrSec; //in
+		wire [1:0] sethms;
+		wire [1:0] upDown ;
 		wire [5:0] sec;
 		wire [5:0] min;
 		wire [4:0] hour;
@@ -225,22 +227,22 @@ module baseline_c5gx(
 		sevenSegDisplay sevenSegDisplay_inst0 (
 				.enable (~minOrSec && enableDisplay),
 				.number (hhour),
-				.pattern (HEX0)
+				.pattern (HEX3)
 		);
 		sevenSegDisplay sevenSegDisplay_inst1 (
 				.enable (~minOrSec && enableDisplay),
 				.number (lhour),
-				.pattern (HEX1)
+				.pattern (HEX2)
 		);
 		sevenSegDisplay sevenSegDisplay_inst2 (
 				.enable (enableDisplay),
 				.number (hminsec),
-				.pattern (HEX2)
+				.pattern (HEX1)
 		);
 		sevenSegDisplay sevenSegDisplay_inst3 (
 				.enable (enableDisplay),
 				.number (lminsec),
-				.pattern (HEX3)
+				.pattern (HEX0)
 		);				
 
 endmodule

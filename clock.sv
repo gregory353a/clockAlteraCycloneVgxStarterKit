@@ -54,7 +54,6 @@ module clock(
 					else if(upDown == 2'b01)
 						sec <= 6'b000000;
 				end
-				default: begin end
 			endcase
 		end
 		
