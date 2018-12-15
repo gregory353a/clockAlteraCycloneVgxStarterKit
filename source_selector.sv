@@ -12,7 +12,7 @@ module source_selector(
 	input wire [3:0] sech,
 	input wire [3:0] secl,
 	
-	input wire [2:0] select,
+	input wire [1:0] select,
 
 	output reg [3:0] hex,
 	output reg [3:0] hex3,	
