@@ -17,7 +17,7 @@ module counter_modulo #(
 		tick = 0;
 	end
 
-	always @(posedge clk) begin
+	always @(posedge clk, posedge reset) begin
 		if(reset) begin
 			cnt <= 32'h00000000;
 			tick <= 0;		

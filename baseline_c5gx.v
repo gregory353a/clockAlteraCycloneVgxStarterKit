@@ -174,15 +174,89 @@ module baseline_c5gx(
 		wire enableDisplay; //in
 		wire set; //in
 		wire minOrSec; //in
+		wire toggleEnable;
+		wire pulse_from_key3;
+		wire tick10ms;
+		wire tick0;
+		wire tick1;
+		wire tick2;
+		wire tick3;
+		wire [3:0] stopwatch0; //redy for disp
+		wire [3:0] stopwatch1; //redy for disp
+		wire [3:0] stopwatch2; //redy for disp
+		wire [3:0] stopwatch3; //redy for disp
 		wire [1:0] sethms;
 		wire [1:0] upDown;
 		wire [5:0] sec;
 		wire [5:0] min;
 		wire [4:0] hour;
-		wire [4:0] hhour;
-		wire [4:0] lhour;
-		wire [4:0] hminsec;
-		wire [4:0] lminsec;
+		wire [3:0] hhour;
+		wire [3:0] lhour;
+		wire [3:0] hminsec;
+		wire [3:0] lminsec;
+		
+		wire [1:0] sourceSelect;
+		wire [3:0] toHex;
+		wire [3:0] toHex3; //redy for disp
+		wire [3:0] toHex2; //redy for disp
+		wire [3:0] toHex1; //redy for disp
+		wire [3:0] toHex0; //redy for disp
+
+			
+		falling_edge_detect falling_edge_detect_inst3(
+				.clk (CLOCK_50_B7A),
+				.in (KEY[3]),
+				.pulse (pulse_from_key3)
+		);
+		
+		toggle toggle_inst(
+				.clk (CLOCK_50_B7A),
+				.in (pulse_from_key3),
+				.reset (!CPU_RESET_n),
+				.enable (toggleEnable)				
+		);
+		
+		counter_modulo #(.N(500000)) counter_modulo10ms(
+				 .clk (CLOCK_50_B7A),
+				 .reset (!CPU_RESET_n),
+				 .enable (toggleEnable),
+				 .cnt (),
+             .tick (tick10ms)
+		);
+		
+		counter_modulo counter_modulo0(
+				 .clk (tick10ms),
+				 .reset (!CPU_RESET_n),
+				 .enable (toggleEnable),
+				 .cnt (stopwatch0),
+             .tick (tick0)
+		);
+		
+		counter_modulo counter_modulo1(
+				 .clk (tick0),
+				 .reset (!CPU_RESET_n),
+				 .enable (toggleEnable),
+				 .cnt (stopwatch1),
+             .tick (tick1)
+		);
+		
+		counter_modulo counter_modulo2(
+				 .clk (tick1),
+				 .reset (!CPU_RESET_n),
+				 .enable (toggleEnable),
+				 .cnt (stopwatch2),
+             .tick (tick2)
+		);
+		
+		counter_modulo counter_modulo3(
+				 .clk (tick2),
+				 .reset (!CPU_RESET_n),
+				 .enable (toggleEnable),
+				 .cnt (stopwatch3),
+             .tick (tick3)
+		);
+		
+		
 		
 		clockDivider clockDivider_inst(
 				.clk (CLOCK_50_B7A),
@@ -198,6 +272,7 @@ module baseline_c5gx(
 				.enableDisplay (enableDisplay),
 				.set (set), //clock
 				.minOrSec (minOrSec), //timeToNumber
+				.sourceSelect (sourceSelect), //source_selector
 				.sethms (sethms), //clock
 				.upDown (upDown), //clock
 				.ledr (LEDR),
@@ -225,26 +300,54 @@ module baseline_c5gx(
 				.hminsec (hminsec),
 				.lminsec (lminsec)
         );
+		  
+		  source_selector source_selector_insance(
+				.clk (CLOCK_50_B7A),
+				.enable (enableDisplay),
+		  
+				.stopwatchsech (stopwatch3),
+				.stopwatchsecl (stopwatch2),
+				.stopwatchmsech (stopwatch1),
+				.stopwatchmsecl (stopwatch0),
+
+				.hourh (hhour),
+				.hourl (lhour),
+				.minh (hminsec), //torepair
+				.minl (lminsec),
+
+				.sech (hminsec),
+				.secl (lminsec),
+	
+				.select (sourceSelect),
+
+				.hex (toHex),
+				.hex3 (toHex3),	
+				.hex2 (toHex2),
+				.hex1 (toHex1),
+				.hex0 (toHex0)
+		  );
 		
 		sevenSegDisplay sevenSegDisplay_inst0 (
-				.enable (~minOrSec && enableDisplay),
-				.number (hhour),
+				.enable (toHex[3]),
+				.number (toHex3),
 				.pattern (HEX3)
 		);
 		sevenSegDisplay sevenSegDisplay_inst1 (
-				.enable (~minOrSec && enableDisplay),
-				.number (lhour),
+				.enable (toHex[2]),
+				.number (toHex2),
 				.pattern (HEX2)
 		);
 		sevenSegDisplay sevenSegDisplay_inst2 (
-				.enable (enableDisplay),
-				.number (hminsec),
+				.enable (toHex[1]),
+				.number (toHex1),
 				.pattern (HEX1)
 		);
 		sevenSegDisplay sevenSegDisplay_inst3 (
-				.enable (enableDisplay),
-				.number (lminsec),
+				.enable (toHex[0]),
+				.number (toHex0),
 				.pattern (HEX0)
-		);				
+		);
+
+		
 
 endmodule
