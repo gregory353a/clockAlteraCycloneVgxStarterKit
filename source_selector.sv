@@ -1,4 +1,5 @@
-module source_selector(	
+module source_selector(
+	input wire clk,
 	input wire enable,
 
 	input wire [3:0] stopwatchsech,
@@ -30,7 +31,7 @@ module source_selector(
 		hex0 = 4'h0; 
 	end
 	
-	always @(select)
+	always @(posedge clk)
 	begin : selector
 		if(enable) begin
 			case (select)
