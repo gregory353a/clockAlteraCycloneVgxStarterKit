@@ -3,10 +3,10 @@ module timeToNumber(
 	input wire [5:0] min,
 	input wire [5:0] sec,
 	input wire minOrSec,
-	output reg [4:0] hhour,
-	output reg [4:0] lhour,
-	output reg [4:0] hminsec,
-	output reg [4:0] lminsec
+	output reg [3:0] hhour,
+	output reg [3:0] lhour,
+	output reg [3:0] hminsec,
+	output reg [3:0] lminsec
 );
 
 	initial begin
