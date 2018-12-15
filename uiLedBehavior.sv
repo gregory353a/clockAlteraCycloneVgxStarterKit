@@ -20,7 +20,7 @@ module uiLedBehavior(
 	assign enableDisplay = sw[9];
 	assign set = sw[2];
 	assign minOrSec = sw[7];
-	assign sourceSelect[1:0] = sw[5:4];
+	assign sourceSelect[1:0] = sw[4:3];
 	assign sethms[1:0] = sw[1:0];
 	assign upDown[1:0] = button[1:0];
 
