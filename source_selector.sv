@@ -1,4 +1,6 @@
 module source_selector(	
+	input wire enable,
+
 	input wire [3:0] stopwatchsech,
 	input wire [3:0] stopwatchsecl,
 	input wire [3:0] stopwatchmsech,
@@ -30,35 +32,39 @@ module source_selector(
 	
 	always @(select)
 	begin : selector
-		case (select)
-			2'b00: begin 
-				hex = 4'hf;
-				hex3 = hourh;
-				hex2 = hourl;
-				hex1 = minh;
-				hex0 = minl;
-			end 
-			2'b01: begin 
-				hex = 4'h3
-				hex3 = 4'h0;
-				hex2 = 4'h0;
-				hex1 = sech;
-				hex0 = secl;
-			end  
-			2'b10: begin 
-				hex = 4'hf;
-				hex3 = stopwatchsech;
-				hex2 = stopwatchsecl;
-				hex1 = stopwatchmsech;
-				hex0 = stopwatchmsecl;				
-			end
-			2'b11: begin
-				hex =4'h0;
-				hex3 = 4'h0;
-				hex2 = 4'h0;
-				hex1 = 4'h0;
-				hex0 = 4'h0;
-			end
-		endcase
+		if(enable) begin
+			case (select)
+				2'b00: begin 
+					hex = 4'hf;
+					hex3 = hourh;
+					hex2 = hourl;
+					hex1 = minh;
+					hex0 = minl;
+				end 
+				2'b01: begin 
+					hex = 4'h3;
+					hex3 = 4'h0;
+					hex2 = 4'h0;
+					hex1 = sech;
+					hex0 = secl;
+				end  
+				2'b10: begin 
+					hex = 4'hf;
+					hex3 = stopwatchsech;
+					hex2 = stopwatchsecl;
+					hex1 = stopwatchmsech;
+					hex0 = stopwatchmsecl;				
+				end
+				2'b11: begin
+					hex =4'h0;
+					hex3 = 4'h0;
+					hex2 = 4'h0;
+					hex1 = 4'h0;
+					hex0 = 4'h0;
+				end
+			endcase
+		end else begin
+			hex =4'h0;
+		end
 	end
 endmodule
