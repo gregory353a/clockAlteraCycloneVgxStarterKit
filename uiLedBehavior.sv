@@ -5,6 +5,7 @@ module uiLedBehavior(
 	output reg on, //clock
 	output reg set, //clock
 	output reg minOrSec, //timeToNumber
+	output reg [1:0] sourceSelect,//sourceSelector
 	output reg enableDisplay,
 	output reg [1:0] sethms, //clock
 	output reg [1:0] upDown, //clock
@@ -19,6 +20,7 @@ module uiLedBehavior(
 	assign enableDisplay = sw[9];
 	assign set = sw[2];
 	assign minOrSec = sw[7];
+	assign sourceSelect[1:0] = sw[5:4];
 	assign sethms[1:0] = sw[1:0];
 	assign upDown[1:0] = button[1:0];
 
