@@ -1,5 +1,8 @@
 db
 work
+incremental_db
+output_files
+simulation
 
 modelsim.ini
 

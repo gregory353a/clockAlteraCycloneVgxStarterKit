@@ -175,7 +175,7 @@ module baseline_c5gx(
 		wire set; //in
 		wire minOrSec; //in
 		wire [1:0] sethms;
-		wire [1:0] upDown ;
+		wire [1:0] upDown;
 		wire [5:0] sec;
 		wire [5:0] min;
 		wire [4:0] hour;
@@ -208,6 +208,8 @@ module baseline_c5gx(
             .oneSecClk (clk),
 				.on (on),
             .set (set),
+				.sethms (sethms),
+				.upDown (upDown),
             .hour (hour),
 				.min (min),
 				.sec (sec)
