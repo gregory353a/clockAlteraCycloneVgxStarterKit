@@ -1,5 +1,5 @@
 module toggle (
-  input  wire clock,
+  input  wire clk,
   input  wire in,
   input  wire reset,
   output wire enable
@@ -8,7 +8,7 @@ module toggle (
 		enable = 0;
 	end
 
-	always @(posedge clock)
+	always @(posedge clk)
 	begin
 		if(reset)begin
 			enable = 0;
